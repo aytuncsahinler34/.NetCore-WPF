@@ -4,7 +4,7 @@ namespace ProposalDemo.Core.Models.Responses
 {
 	public class ProductProposalResponse
 	{
-		public List<Data> Data { get; set; }
+		public List<Data> Results { get; set; }
 	}
 
 	public class Data

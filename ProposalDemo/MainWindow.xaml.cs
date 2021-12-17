@@ -1,23 +1,10 @@
 ﻿using ProposalDemo.Business.Abstract;
-using ProposalDemo.Core.Enums;
 using ProposalDemo.Core.Interfaces;
 using ProposalDemo.Core.Models.Args;
+using ProposalDemo.Core.Models.Responses;
 using ProposalDemo.Entities.Concrete;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProposalDemo
 {
@@ -28,6 +15,9 @@ namespace ProposalDemo
 	{
 		private readonly ISompoIntegrationService _sompoIntegrationService;
 		private readonly IProductProposalBusiness _productProposalBusiness;
+		private readonly string baseUrl = "https://apitest.sompojapan.com.tr/";
+		private readonly string source = "SOMPO";
+		private readonly string key = "77lTCSn41w";
 		public MainWindow(ISompoIntegrationService sompoIntegrationService, IProductProposalBusiness productProposalBusiness) {
 			_sompoIntegrationService = sompoIntegrationService;
 			_productProposalBusiness = productProposalBusiness;
@@ -43,9 +33,11 @@ namespace ProposalDemo
 			else 
 			{
 				#region GetFilterData
-				string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
-				string source = ConfigurationManager.AppSettings["source"].ToString();
-				string key = ConfigurationManager.AppSettings["key"].ToString();
+				//string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
+				//string source = ConfigurationManager.AppSettings["source"].ToString();
+				//string key = ConfigurationManager.AppSettings["key"].ToString();
+				//yukarıdaki şekilde de veriler alınabilir.
+				
 				FilterProductProposalArgs filterProductProposalArgs = new FilterProductProposalArgs() {
 					ProposalNo = Convert.ToInt64(textBoxProposalNo.Text),
 					ProductNo = textBoxProductNo.Text,
@@ -68,19 +60,23 @@ namespace ProposalDemo
 					Creator = 0
 			    };
 
-			    _productProposalBusiness.Add(productProposalInfo);
+			    var insertItem =_productProposalBusiness.Add(productProposalInfo);
 				#endregion
 
-				var productProposalResponse = _sompoIntegrationService.GetProductProposalAsync(filterProductProposalArgs).Result;
-				//entity update işlemi eklenmesi lazım sadece.
-				if (productProposalResponse.Data.Any()) 
+				#region Update Entity
+				var productProposalResponse = _sompoIntegrationService.GetProductProposal(filterProductProposalArgs);
+				
+				if (productProposalResponse.Results.Any()) 
 				{
-					dataGridPositive.ItemsSource = productProposalResponse.Data.Where(x => x.Status.Name == ProductProposalStatusEnum.Positive.ToString()).Select(x => x.Description).ToList();
-					dataGridInfo.ItemsSource = productProposalResponse.Data.Where(x => x.Status.Name == ProductProposalStatusEnum.Info.ToString()).Select(x => x.Description).ToList();
-					dataGridNegative.ItemsSource = productProposalResponse.Data.Where(x => x.Status.Name == ProductProposalStatusEnum.Negative.ToString()).Select(x => x.Description).ToList();
+					dataGridPositive.ItemsSource = productProposalResponse.Results.Where(x => x.Status.Value == "1").Select(x => new Data { Description = x.Description }).ToList();
+					dataGridInfo.ItemsSource = productProposalResponse.Results.Where(x => x.Status.Value == "2").Select(x => new Data { Description = x.Description }).ToList();
+					dataGridNegative.ItemsSource = productProposalResponse.Results.Where(x => x.Status.Value == "3").Select(x => new Data { Description = x.Description }).ToList();
+					insertItem.Response = Newtonsoft.Json.JsonConvert.SerializeObject(productProposalResponse.Results);
+					_productProposalBusiness.Update(insertItem);
 				}
+				#endregion
 			}
-			
+
 		}
 	}
 }

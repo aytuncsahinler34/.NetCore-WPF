@@ -10,7 +10,7 @@ namespace ProposalDemo.Core.Services
 {
 	public class SompoIntegrationService : ISompoIntegrationService
 	{
-		public async Task<ProductProposalResponse> GetProductProposalAsync(FilterProductProposalArgs filterProductProposalArgs) 
+		public  ProductProposalResponse GetProductProposal(FilterProductProposalArgs filterProductProposalArgs) 
 		{
 
 			ProductProposalRequest productProposalRequest = new ProductProposalRequest() 
@@ -28,7 +28,7 @@ namespace ProposalDemo.Core.Services
 				}
 			};
 
-			return await HttpHelper.HttpRequest<ProductProposalResponse>(filterProductProposalArgs.BaseUrl, "sample/engine", HttpMethodEnum.POST, productProposalRequest, null, null);
+			return  HttpHelper.HttpRequest<ProductProposalResponse>(filterProductProposalArgs.BaseUrl, "sample/engine", HttpMethodEnum.POST, productProposalRequest, null, null);
 
 		}
 	}

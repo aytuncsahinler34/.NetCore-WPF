@@ -7,14 +7,13 @@ using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ProposalDemo.Core.Helpers
 {
     public class HttpHelper
     {
         private const string _apiContentType = "application/json";
-        public static async Task<T> HttpRequest<T>(string baseUrl, string url, HttpMethodEnum method, object content,
+        public static  T HttpRequest<T>(string baseUrl, string url, HttpMethodEnum method, object content,
                                            Dictionary<string, IEnumerable<string>> headers, AuthenticationHeaderValue authorization = null) {
 
         using (var http = new HttpClient()) {
@@ -49,10 +48,10 @@ namespace ProposalDemo.Core.Helpers
             if (method == HttpMethodEnum.GET)
                 requestMessage.Content = null;
 
-            var response = await http.SendAsync(requestMessage);
-            var data = await response.Content.ReadAsStringAsync();
+            var response = http.Send(requestMessage);
+            var data = response.Content.ReadAsStringAsync();
 
-            var jsonData = JsonConvert.DeserializeObject<T>(data);
+            var jsonData = JsonConvert.DeserializeObject<T>(data.Result);
             return jsonData;
         }
 
