@@ -1,0 +1,32 @@
+﻿<Window x:Class="ProposalDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProposalDemo"
+        mc:Ignorable="d"
+        Title="ÜrünTeklif" Height="450" Width="800">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="89*"/>
+			<ColumnDefinition Width="711*"/>
+		</Grid.ColumnDefinitions>
+		<DataGrid x:Name="dataGridPositive"   Margin="200,238,296,34" Grid.Column="1"/>
+		<DataGrid x:Name="dataGridInfo" Margin="48,238,553,34" Grid.ColumnSpan="2"/>
+		<DataGrid x:Name="dataGridNegative" Margin="464,238,27,34" Grid.Column="1"/>
+		<Label x:Name="label" Content="Ürün No:" HorizontalAlignment="Left" Margin="2,19,0,0" VerticalAlignment="Top" Height="23" Grid.Column="1"/>
+		<Label x:Name="label1" Content="Teklif No:" HorizontalAlignment="Left" Margin="2,57,0,0" VerticalAlignment="Top" Height="28" Grid.Column="1"/>
+		<Label x:Name="label2" Content="Yenileme No:" HorizontalAlignment="Left" Margin="2,99,0,0" VerticalAlignment="Top" Height="25" Grid.Column="1"/>
+		<Label x:Name="label3" Content="Zeyil No:" HorizontalAlignment="Left" Margin="2,140,0,0" VerticalAlignment="Top" Height="27" Grid.Column="1"/>
+		<TextBox x:Name="textBoxProposalNo" HorizontalAlignment="Left" Margin="135,19,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23" Grid.Column="1"/>
+		<TextBox x:Name="textBoxEndorsNo" HorizontalAlignment="Left" Margin="135,57,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23" Grid.Column="1"/>
+		<TextBox x:Name="textBoxRenewalNo" HorizontalAlignment="Left" Margin="135,99,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23" Grid.Column="1"/>
+		<TextBox x:Name="textBoxProductNo" HorizontalAlignment="Left" Margin="135,140,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23" Grid.Column="1"/>
+		<Button x:Name="button" Content="Sorgula" HorizontalAlignment="Left" Margin="173,181,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.415,0.137" Width="82" Grid.Column="1" Click="button_Click"/>
+		<Label x:Name="label4" Content="OLUMLU
+			   " Grid.Column="1" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Height="24"/>
+		<Label x:Name="label5" Content="BİLGİ" Grid.Column="1" HorizontalAlignment="Left" Margin="295,0,0,0" VerticalAlignment="Center"/>
+		<Label x:Name="label6" Content="OLUMSUZ
+			   " Grid.Column="1" HorizontalAlignment="Left" Margin="574,0,0,0" VerticalAlignment="Center"/>
+	</Grid>
+</Window>
