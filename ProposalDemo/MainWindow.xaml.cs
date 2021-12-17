@@ -4,6 +4,7 @@ using ProposalDemo.Core.Models.Args;
 using ProposalDemo.Core.Models.Responses;
 using ProposalDemo.Entities.Concrete;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace ProposalDemo
